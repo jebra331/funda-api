@@ -57,6 +57,19 @@ def health():
         "status": "healthy",
         "timestamp": time.time()
     })
+@app.route('/api/test-update', methods=['GET'])
+def test_update():
+    """نقطه تست برای آپدیت دستی (بدون نیاز به توکن)"""
+    global funda_data
+    funda_data.update({
+        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
+        "funda_score": 3.2,
+        "sentiment": "bullish",
+        "confidence": 85,
+        "summary": "Test update from browser",
+        "price_now": 4972
+    })
+    return jsonify({"status": "ok", "data": funda_data})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
