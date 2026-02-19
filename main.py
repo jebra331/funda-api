@@ -1,22 +1,12 @@
-from fastapi import FastAPI
-import time
+from flask import Flask
+import os
 
-app = FastAPI()
+app = Flask(__name__)
 
-funda_data = {
-    "timestamp": time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime()),
-    "funda_score": 1.0,
-    "sentiment": "صعودی ملایم",
-    "confidence": 85,
-    "summary": "تحلیل لحظه‌ای طلا...",
-    "price_now": 4968
-}
+@app.route('/')
+def home():
+    return "Hello from Flask!"
 
-@app.get("/")
-async def root():
-    return {"message": "Funda Score API is running!", "status": "active"}
-
-@app.get("/api/funda")
-async def get_funda():
-    return funda_data
-
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
